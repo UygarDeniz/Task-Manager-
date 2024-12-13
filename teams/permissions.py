@@ -41,8 +41,8 @@ class IsTeamAdmin(permissions.BasePermission):
         
         team_id = view.kwargs.get('team_id')
         
-        # Creating a new team
-        if team_id is None and request.method in ["POST"]:
+        # Creating a new team / Listing teams
+        if team_id is None:
             return True
         
         return TeamMembership.objects.filter(team=team_id, member=request.user.id, is_admin=True).exists()
