@@ -22,5 +22,9 @@ class TeamMembership(models.Model):
     class Meta:
         unique_together = ['team', 'member']
     
+    @classmethod
+    def create_admin_membership(cls, team: Team, member: User) -> 'TeamMembership':
+        return cls.objects.create(team=team, member=member, is_admin=True)
+    
     def __str__(self):
         return f"{self.member.username} in {self.team.name} (Admin: {self.is_admin})"

@@ -9,7 +9,7 @@ class TeamSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         request = self.context.get('request')
         team = super().create(validated_data)
-        TeamMembership.objects.create(team=team, member=request.user, is_admin=True)
+        TeamMembership.create_admin_membership(team, request.user)
         return team
 
 class TeamMembershipSerializer(serializers.ModelSerializer):
