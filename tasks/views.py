@@ -66,10 +66,9 @@ class TaskViewSet(ModelViewSet):
                 status=status.HTTP_404_NOT_FOUND
             )
         
-        task.assignee = assignee
-        task.save()
-        
+        task.assign_assignee(task, assignee)
         serializer = self.get_serializer(task)
+        
         return Response(serializer.data, status=status.HTTP_200_OK)
         
 

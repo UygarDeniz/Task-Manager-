@@ -1,3 +1,4 @@
+from datetime import timezone
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -28,6 +29,22 @@ class Task(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
+    @classmethod
+    def create_task(cls, team, title, description, priority, deadline, estimated_duration):
+        task = cls.objects.create(
+            team=team,
+            title=title,
+            description=description,
+            priority=priority,
+            deadline=deadline,
+            estimated_duration=estimated_duration
+        )
+        return task
+    
+    def assign_assignee(cls, task, assignee):
+        task.assignee = assignee
+        task.save()
+        return task
     
     def __str__(self):
         return self.title
